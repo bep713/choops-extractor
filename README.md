@@ -18,8 +18,8 @@ If you do not want to extract the sub-files, you can add `--iff-only` to the com
 #### Index
 If you know which index you want to extract, you can use `-i <index>`. The index must be a number. It will extract the IFF file at <index> in the game files.
 
-#### File
-If you only want to extract one IFF file, you can use `-f <name>`. This will ONLY extract the IFF file with the <name> specified. You have to include .iff on the end of the name.
+#### File by name
+If you only want to extract one IFF file by name, you can use `-f <name>`. This will ONLY extract the IFF file with the <name> specified. You have to include .iff on the end of the name.
 
 #### Cache
 If you want to force re-build the cache, use `-c`
