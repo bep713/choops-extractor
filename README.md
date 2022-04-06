@@ -1,7 +1,7 @@
 ## Choops Extractor
 
 ### Instructions
-1. Download the file from here.
+1. Download the file from the releases page on here.
 2. Use 7-zip to extract it somewhere. You'll see two files: choops-extractor.exe and gtf2dds.exe
 3. Open a command prompt and type `choops-extractor.exe rip <path to game files up till USRDIR> <path to output>`
 4. It will take awhile, it will build a cache and then go through each IFF one by one to extract the contents.
