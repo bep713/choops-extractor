@@ -8,8 +8,8 @@ program
 
 program.command('rip')
     .description('Rip all or some of the game files to the specified output directory.')
-    .argument('<string>', 'Path to Choops game files directory (must include USRDIR in path)')
-    .argument('<string>', 'Path to output the game files')
+    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
+    .argument('<output path>', 'Path to output the game files')
     .option('-c, --cache', 'Force cache rebuild')
     .option('-i, --index <number>', 'IFF file to rip (by index)')
     .option('-f, --file <string>', 'IFF file to rip (by name, include .iff on the end)')

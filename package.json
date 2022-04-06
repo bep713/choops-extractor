@@ -13,5 +13,8 @@
     "commander": "^9.1.0",
     "make-dir": "^3.1.0",
     "winston": "^3.7.2"
+  },
+  "pkg": {
+    "assets": "./node_modules/2k-tools/lib/gtf2dds.exe"
   }
 }
