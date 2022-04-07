@@ -1,8 +1,11 @@
+const fsBase = require('fs');
 const path = require('path');
 const fs = require('fs/promises');
 const mkdir = require('make-dir');
+const { pipeline } = require('stream');
 const { createLogger, format, transports } = require('winston');
 
+const IFFWriter = require('2k-tools/src/parser/IFFWriter');
 const IFFType = require('2k-tools/src/model/general/iff/IFFType');
 const ChoopsController = require('2k-tools/src/controller/ChoopsController');
 const ChoopsTextureReader = require('2k-tools/src/parser/choops/ChoopsTextureReader');
@@ -92,8 +95,18 @@ module.exports = async (inputPath, outputPath, options) => {
         await mkdir(folderName);
 
         if (options.iffOnly) {
-            const iff = await controller.getFileRawData(iffData.name);
-            await fs.writeFile(path.join(folderName, iffFileName), iff);
+            const iff = await controller.getFileController(iffData.name);
+
+            await new Promise((resolve, reject) => {
+                pipeline(
+                    new IFFWriter(iff.file),
+                    fsBase.createWriteStream(path.join(folderName, iffFileName)),
+                    (err) => {
+                        if (err) reject(err);
+                        resolve();
+                    }
+                )
+            });
         }
         else {
             const iff = await controller.getFileController(iffData.name);

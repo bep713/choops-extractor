@@ -3,7 +3,7 @@ const ripper = require('./ripper');
 
 program
     .name('choops-extractor')
-    .version('0.1.0')
+    .version('0.2.0')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')
