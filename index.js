@@ -14,6 +14,7 @@ program.command('rip')
     .option('-i, --index <number>', 'IFF file to rip (by index)')
     .option('-f, --file <string>', 'IFF file to rip (by name, include .iff on the end)')
     .option('--iff-only', 'Only rip IFFs, do not rip individual files within them')
+    .option('--raw-iff', 'Do not decompress the IFF. Rip it as-is.')
     .option('--log-output <string>', 'Path to place the output log. Defaults to base output directory')
     .option('--show-console', 'Show the output in the console in addition to creating a log')
     .action(async (inputPath, outputPath, options) => {

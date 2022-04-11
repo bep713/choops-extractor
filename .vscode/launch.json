@@ -14,9 +14,11 @@
             "program": "${workspaceFolder}\\index.js",
             "args": [
                 "rip",
-                "D:\\Media\\Games\\College Hoops 2K8 [U] [BLUS-30078] - Copy\\PS3_GAME\\USRDIR",
-                "D:\\GameRips\\CHoops2k8\\full-rip",
-                "-f", "global.iff"
+                "C:\\Users\\Public\\Public Games\\College Hoops 2K8 [U] [BLUS-30078] - Copy\\PS3_GAME\\USRDIR",
+                "C:\\GameRips\\Choops",
+                "-f", "uh080.iff",
+                "--iff-only",
+                "--raw-iff"
             ]
         }
     ]

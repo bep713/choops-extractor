@@ -95,18 +95,24 @@ module.exports = async (inputPath, outputPath, options) => {
         await mkdir(folderName);
 
         if (options.iffOnly) {
-            const iff = await controller.getFileController(iffData.name);
-
-            await new Promise((resolve, reject) => {
-                pipeline(
-                    new IFFWriter(iff.file),
-                    fsBase.createWriteStream(path.join(folderName, iffFileName)),
-                    (err) => {
-                        if (err) reject(err);
-                        resolve();
-                    }
-                )
-            });
+            if (options.rawIff) {
+                const iffBuf = await controller.getFileRawData(iffData.name);
+                await fs.writeFile(path.join(folderName, iffFileName), iffBuf);
+            }
+            else {
+                const iff = await controller.getFileController(iffData.name);
+    
+                await new Promise((resolve, reject) => {
+                    pipeline(
+                        new IFFWriter(iff.file),
+                        fsBase.createWriteStream(path.join(folderName, iffFileName)),
+                        (err) => {
+                            if (err) reject(err);
+                            resolve();
+                        }
+                    )
+                });
+            }
         }
         else {
             const iff = await controller.getFileController(iffData.name);
