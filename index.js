@@ -1,9 +1,13 @@
 const { program } = require('commander');
-const ripper = require('./ripper');
+
+const cache = require('./src/cache');
+const ripper = require('./src/ripper');
+const importer = require('./src/importer');
+const reverter = require('./src/reverter');
 
 program
     .name('choops-extractor')
-    .version('0.2.0')
+    .version('0.3.0')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')
@@ -20,7 +24,40 @@ program.command('rip')
     .action(async (inputPath, outputPath, options) => {
         await ripper(inputPath, outputPath, options);
     });
-    
+
+program.command('build-cache')
+    .description('Forces a cache build.')
+    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
+    .action(async (pathToGameFiles, options) => {
+        await cache(pathToGameFiles, options);
+    });
+
+program.command('import')
+    .description('Import a file modify the game files')
+    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
+    .argument('<iff file name>', 'Name of the IFF file to modify')
+    .argument('<subfile name>', 'Name of the subfile to modify')
+    .argument('<path to file>', 'Path to the file to import')
+    .option('-c, --cache', 'Force cache rebuild')
+    .action(async (pathToGameFiles, iffFileName, subfileName, pathToFile, options) => {
+        await importer(pathToGameFiles, iffFileName, subfileName, pathToFile, options);
+    });
+
+program.command('revert')
+    .description('Revert a file (warning: cannot be undone!)')
+    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
+    .argument('<iff file name>', 'Name of the IFF file to revert')
+    .action(async (pathToGameFiles, iffFileName, options) => {
+        await reverter.revertFile(pathToGameFiles, iffFileName, options);
+    });
+
+program.command('revert-all')
+    .description('Revert the entire game archive (warning: cannot be undone!)')
+    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
+    .action(async (pathToGameFiles, options) => {
+        await reverter.revertAll(pathToGameFiles, options);
+    });
+
 (async () => {
     await program.parseAsync(process.argv);
 })();

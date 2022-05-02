@@ -14,12 +14,31 @@
             "program": "${workspaceFolder}\\index.js",
             "args": [
                 "rip",
-                "C:\\Users\\Public\\Public Games\\College Hoops 2K8 [U] [BLUS-30078] - Copy\\PS3_GAME\\USRDIR",
-                "C:\\GameRips\\Choops",
-                "-f", "uh080.iff",
-                "--iff-only",
-                "--raw-iff"
+                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+                "D:\\GameRips\\CHoops2k8\\full-rip",
+                "-f", "teamselectlogo.cdf",
+                "-c"
+                // "--iff-only",
+                // "--raw-iff"
             ]
         }
     ]
+    // "configurations": [
+    //     {
+    //         "type": "pwa-node",
+    //         "request": "launch",
+    //         "name": "Launch Program",
+    //         "skipFiles": [
+    //             "<node_internals>/**"
+    //         ],
+    //         "program": "${workspaceFolder}\\index.js",
+    //         "args": [
+    //             "import",
+    //             "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+    //             "uh130.iff",
+    //             "unifregion",
+    //             "C:\\Users\\Matt\\Downloads\\Unis\\Butler Home\\Home_Jersey.dds"
+    //         ]
+    //     }
+    // ]
 }

@@ -104,7 +104,7 @@ module.exports = async (inputPath, outputPath, options) => {
     
                 await new Promise((resolve, reject) => {
                     pipeline(
-                        new IFFWriter(iff.file),
+                        new IFFWriter(iff.file).createStream(),
                         fsBase.createWriteStream(path.join(folderName, iffFileName)),
                         (err) => {
                             if (err) reject(err);
