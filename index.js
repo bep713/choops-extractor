@@ -7,7 +7,7 @@ const reverter = require('./src/reverter');
 
 program
     .name('choops-extractor')
-    .version('0.4.0')
+    .version('0.4.1')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')
@@ -21,6 +21,9 @@ program.command('rip')
     .option('--raw-iff', 'Do not decompress the IFF. Rip it as-is.')
     .option('--log-output <string>', 'Path to place the output log. Defaults to base output directory')
     .option('--show-console', 'Show the output in the console in addition to creating a log')
+    .option('--type <types...>', 'Only output files of certain type(s). Accepts multiple inputs separated by a space. '
+        + 'Supported types: UNKNOWN, TXTR, SCNE, AUDO, LAYT, MRKS, PRIV, TXT, DRCT, CLTH, AMBO, HILT, NAME, CDAN')
+    .option('--raw-type', 'Output the subfile as it is in the IFF. Will not process the type (Ex: Textures will not output as DDS).')
     .action(async (inputPath, outputPath, options) => {
         await ripper(inputPath, outputPath, options);
     });

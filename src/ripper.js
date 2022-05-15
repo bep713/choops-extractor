@@ -38,7 +38,7 @@ module.exports = async (inputPath, outputPath, options) => {
         }));
     }
 
-    logger.info('*** Choops Extractor v0.1 output ***');
+    logger.info('*** Choops Extractor v0.4.1 output ***');
 
     await hashUtil.hashLookupPromise;
     const controller = new ChoopsController(inputPath);
@@ -59,6 +59,18 @@ module.exports = async (inputPath, outputPath, options) => {
         logger.info(`\t- Reading and ripping the IFF at index "${options.index}"`);
     }
 
+    if (options.type) {
+        logger.info(`\t- Only extracting certain types of subfiles: "${options.type}"`);
+    }
+
+    if (options.rawIff) {
+        logger.info(`\t- Raw IFF: Extracting raw, uncompressed IFF only.`);
+    }
+
+    if (options.rawType) {
+        logger.info(`\t- Raw type: Extracting raw type. Will not convert to a texture.`);
+    }
+
     logger.info('\n** Reading data from game files **\n');
 
     controller.on('progress', progressHandler);
@@ -71,6 +83,20 @@ module.exports = async (inputPath, outputPath, options) => {
     const textureReader = new ChoopsTextureReader();
 
     let iffsToRead = [];
+    let typesToExtract = Object.keys(IFFType.TYPES).map((type) => {
+        return IFFType.TYPES[type];
+    });
+
+    if (options.type && options.type.length > 0) {
+        const typeCodes = options.type.map((type) => {
+            return IFFType.TYPES[type];
+        });
+
+        typesToExtract = typesToExtract.filter((type) => {
+            return options.type.indexOf(type) >= 0
+                || typeCodes.indexOf(type) >= 0;
+        });
+    }
     
     if (options.index) {
         iffsToRead.push(controller.data[parseInt(options.index)]);
@@ -120,28 +146,41 @@ module.exports = async (inputPath, outputPath, options) => {
             if (!(iff instanceof Buffer)) {
                 try {
                     for (const file of iff.file.files) {
-                        if (file.type === IFFType.TYPES.TXTR) {
-                            const fileDds = await textureReader.toDDSFromFile(file);
-                            if (fileDds) {
-                                await fs.writeFile(path.join(folderName, `${file.name}.dds`), fileDds);
-                            }
+                        if (typesToExtract.indexOf(file.type) < 0) {
+                            continue;
                         }
-                        else if (file.type === IFFType.TYPES.SCNE) {
-                            const packageController = await iff.getFileController(file.name, IFFType.TYPES.SCNE);
-                            const scneFolderName = path.join(folderName, file.name);
 
-                            if (packageController.file.textures.length > 0) {
-                                await mkdir(scneFolderName);
-                            }
-
-                            for (const texture of packageController.file.textures) {
-                                const fileDds = await textureReader.toDDSFromTexture(texture);
+                        if (!options.rawType) {
+                            if (file.type === IFFType.TYPES.TXTR) {
+                                const fileDds = await textureReader.toDDSFromFile(file);
                                 if (fileDds) {
-                                    await fs.writeFile(path.join(scneFolderName, `${texture.name}.dds`), fileDds);
+                                    await fs.writeFile(path.join(folderName, `${file.name}.dds`), fileDds);
                                 }
+                            }
+                            else if (file.type === IFFType.TYPES.SCNE) {
+                                const packageController = await iff.getFileController(file.name, IFFType.TYPES.SCNE);
+                                const scneFolderName = path.join(folderName, file.name);
+    
+                                if (packageController.file.textures.length > 0) {
+                                    await mkdir(scneFolderName);
+                                }
+    
+                                for (const texture of packageController.file.textures) {
+                                    const fileDds = await textureReader.toDDSFromTexture(texture);
+                                    if (fileDds) {
+                                        await fs.writeFile(path.join(scneFolderName, `${texture.name}.dds`), fileDds);
+                                    }
+                                }
+                            }
+                            else {
+                                outputRawType();
                             }
                         }
                         else {
+                            outputRawType();
+                        }
+
+                        async function outputRawType() {
                             let fileData = Buffer.concat(file.dataBlocks.map((block) => {
                                 return block.data;
                             }));
