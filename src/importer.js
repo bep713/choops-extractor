@@ -10,14 +10,37 @@ module.exports = async (pathToGameFiles, iffFileName, subfileName, pathToFile, o
     });
 
     let fileToModify = await controller.getFileController(iffFileName);
-    let subfile = await fileToModify.getFile(subfileName);
 
-    if (path.extname(pathToFile) === '.dds') {
-        const textureWriter = new ChoopsTextureWriter();
-        await textureWriter.toFileFromDDSPath(pathToFile, subfile);
+    let packageFileName = '';
+
+    if (subfileName.indexOf('/') >= 0) {
+        const splitName = subfileName.split('/');
+        subfileName = splitName[0];
+        packageFileName = splitName[1];
+    }
+
+    let subfile = await fileToModify.getFileController(subfileName);
+
+    if (path.extname(pathToFile) !== '.dds') {
+        console.error('Error: currently, only DDS file imports are supported.');
+    }
+
+    const textureWriter = new ChoopsTextureWriter();
+
+    if (packageFileName) {
+        // SCNE texture
+        const packageFile = subfile.getTextureByName(packageFileName);
+
+        if (packageFile) {
+            await textureWriter.toPackageFileFromDDSPath(pathToFile, packageFile);
+        }
+        else {
+            console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}.`);
+        }
     }
     else {
-        console.error('Error: currently, only DDS file imports are supported.');
+        // Regular texture
+        await textureWriter.toFileFromDDSPath(pathToFile, subfile);
     }
 
     await controller.repack();

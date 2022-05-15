@@ -7,7 +7,7 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Rip",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -16,12 +16,44 @@
                 "rip",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
                 "D:\\GameRips\\CHoops2k8\\full-rip",
-                "-f", "frontend.iff",
+                "-f", "s000.iff",
                 // "--iff-only",
                 // "--raw-iff",
-                // "--type", "TXTR",
+                "--type", "SCNE",
                 "--show-console",
-                // "--raw-type"
+                "--raw-type"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Import regular texture",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "import",
+                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+                "uh130.iff",
+                "unifregion",
+                "C:\\Users\\Matt\\Downloads\\Unis\\Butler Home\\Home_Jersey.dds"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Import package texture",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "import",
+                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+                "s000.iff",
+                "floor/texture_4",
+                "D:\\GameRips\\CHoops2k8\\full-rip\\s000\\floor\\4 - Copy.dds"
             ]
         }
     ]

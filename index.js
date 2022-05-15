@@ -39,7 +39,8 @@ program.command('import')
     .description('Import a file modify the game files')
     .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
     .argument('<iff file name>', 'Name of the IFF file to modify')
-    .argument('<subfile name>', 'Name of the subfile to modify')
+    .argument('<subfile name>', 'Name of the subfile to modify. If importing a SCNE texture, subfile name should include both '
+        + 'SCNE and texture name (without .DDS at the end), separated with a "/". Ex: arena/texture_0')
     .argument('<path to file>', 'Path to the file to import')
     .option('-c, --cache', 'Force cache rebuild')
     .action(async (pathToGameFiles, iffFileName, subfileName, pathToFile, options) => {
