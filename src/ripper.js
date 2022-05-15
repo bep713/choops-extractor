@@ -126,6 +126,21 @@ module.exports = async (inputPath, outputPath, options) => {
                                 await fs.writeFile(path.join(folderName, `${file.name}.dds`), fileDds);
                             }
                         }
+                        else if (file.type === IFFType.TYPES.SCNE) {
+                            const packageController = await iff.getFileController(file.name);
+                            const scneFolderName = path.join(folderName, file.name);
+
+                            if (packageController.file.textures.length > 0) {
+                                await mkdir(scneFolderName);
+                            }
+
+                            for (const texture of packageController.file.textures) {
+                                const fileDds = await textureReader.toDDSFromTexture(texture);
+                                if (fileDds) {
+                                    await fs.writeFile(path.join(scneFolderName, `${texture.name}.dds`), fileDds);
+                                }
+                            }
+                        }
                         else {
                             let fileData = Buffer.concat(file.dataBlocks.map((block) => {
                                 return block.data;
