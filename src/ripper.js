@@ -127,7 +127,7 @@ module.exports = async (inputPath, outputPath, options) => {
                             }
                         }
                         else if (file.type === IFFType.TYPES.SCNE) {
-                            const packageController = await iff.getFileController(file.name);
+                            const packageController = await iff.getFileController(file.name, IFFType.TYPES.SCNE);
                             const scneFolderName = path.join(folderName, file.name);
 
                             if (packageController.file.textures.length > 0) {
@@ -151,7 +151,7 @@ module.exports = async (inputPath, outputPath, options) => {
                     }
                 }
                 catch (err) {
-                    logger.info(err);
+                    logger.info('' + err);
                 }
             }
             else {

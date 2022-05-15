@@ -7,7 +7,7 @@ const reverter = require('./src/reverter');
 
 program
     .name('choops-extractor')
-    .version('0.3.0')
+    .version('0.4.0')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')

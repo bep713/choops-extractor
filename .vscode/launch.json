@@ -16,7 +16,7 @@
                 "rip",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
                 "D:\\GameRips\\CHoops2k8\\full-rip",
-                "-f", "s000.iff",
+                "-f", "gamedata.iff",
                 // "--iff-only",
                 // "--raw-iff"
             ]
