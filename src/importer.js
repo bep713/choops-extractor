@@ -1,5 +1,6 @@
 const path = require('path');
 
+const IFFType = require('2k-tools/src/model/general/iff/IFFType');
 const ChoopsController = require('2k-tools/src/controller/ChoopsController');
 const ChoopsTextureWriter = require('2k-tools/src/parser/choops/ChoopsTextureWriter');
 
@@ -12,6 +13,7 @@ module.exports = async (pathToGameFiles, iffFileName, subfileName, pathToFile, o
     let fileToModify = await controller.getFileController(iffFileName);
 
     let packageFileName = '';
+    let type = null;
 
     if (subfileName.indexOf('/') >= 0) {
         const splitName = subfileName.split('/');
@@ -19,7 +21,13 @@ module.exports = async (pathToGameFiles, iffFileName, subfileName, pathToFile, o
         packageFileName = splitName[1];
     }
 
-    let subfile = await fileToModify.getFileController(subfileName);
+    if (subfileName.indexOf('.') >= 0) {
+        const splitName = subfileName.split('.');
+        subfileName = splitName[0];
+        type =  IFFType.TYPES[splitName[1].toUpperCase()];
+    }
+
+    let subfile = await fileToModify.getFileController(subfileName, type);
 
     if (path.extname(pathToFile) !== '.dds') {
         console.error('Error: currently, only DDS file imports are supported.');

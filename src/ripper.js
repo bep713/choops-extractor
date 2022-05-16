@@ -38,7 +38,7 @@ module.exports = async (inputPath, outputPath, options) => {
         }));
     }
 
-    logger.info('*** Choops Extractor v0.4.1 output ***');
+    logger.info('*** Choops Extractor v0.4.2 output ***');
 
     await hashUtil.hashLookupPromise;
     const controller = new ChoopsController(inputPath);
