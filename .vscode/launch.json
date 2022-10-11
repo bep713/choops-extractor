@@ -7,7 +7,7 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Rip",
+            "name": "Rip all",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -16,46 +16,90 @@
                 "rip",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
                 "D:\\GameRips\\CHoops2k8\\full-rip",
-                "-f", "s000.iff",
+                "--show-console",
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Rip one IFF",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "rip",
+                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+                "D:\\GameRips\\CHoops2k8\\full-rip",
+                "-f", "s001.iff",
                 // "--iff-only",
                 // "--raw-iff",
-                "--type", "SCNE",
-                "--show-console",
-                "--raw-type"
+                // "--type", "SCNE",
+                // "--show-console",
+                // "--raw-type"
             ]
         },
+        // {
+        //     "type": "pwa-node",
+        //     "request": "launch",
+        //     "name": "Import regular texture (v1)",
+        //     "skipFiles": [
+        //         "<node_internals>/**"
+        //     ],
+        //     "program": "${workspaceFolder}\\index.js",
+        //     "args": [
+        //         "import",
+        //         "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+        //         "studio_pontiac.iff",
+        //         "back",
+        //         "D:\\GameRips\\CHoops2k8\\full-rip\\studio_pontiac\\backmodified.dds"
+        //     ]
+        // },
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Import regular texture",
+            "name": "Import IFF (v2)",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\index.js",
             "args": [
                 "import",
-                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
-                "uh130.iff",
-                "unifregion",
-                "C:\\Users\\Matt\\Downloads\\Unis\\Butler Home\\Home_Jersey.dds"
+                "D:\\GameRips\\CHoops2k8\\full-rip",
+                "D:\\GameRips\\CHoops2k8\\full-rip\\s001.iff",
+                "-iff", "s000.iff",
             ]
         },
+        // {
+        //     "type": "pwa-node",
+        //     "request": "launch",
+        //     "name": "Import package texture (v1)",
+        //     "skipFiles": [
+        //         "<node_internals>/**"
+        //     ],
+        //     "program": "${workspaceFolder}\\index.js",
+        //     "args": [
+        //         "import",
+        //         "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+        //         "global.iff",
+        //         "quicknav.scne/texture_0",
+        //         "D:\\GameRips\\CHoops2k8\\full-rip\\global\\quicknav\\texture_0 - Copy.dds"
+        //     ]
+        // },
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Import package texture",
+            "name": "Build",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\index.js",
             "args": [
-                "import",
+                "build",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
-                "global.iff",
-                "quicknav.scne/texture_0",
-                "D:\\GameRips\\CHoops2k8\\full-rip\\s000\\floor\\4 - Copy.dds"
+                "D:\\GameRips\\CHoops2k8\\full-rip\\_overrides",
             ]
-        }
+        },
     ]
     // "configurations": [
     //     {

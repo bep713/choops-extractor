@@ -1,13 +1,14 @@
 const { program } = require('commander');
 
 const cache = require('./src/cache');
-const ripper = require('./src/ripper');
-const importer = require('./src/importer');
+const ripper = require('./src/ripperV2');
+const importer = require('./src/importerV2');
 const reverter = require('./src/reverter');
+const builder = require('./src/builder');
 
 program
     .name('choops-extractor')
-    .version('0.4.2')
+    .version('0.5.0')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')
@@ -36,15 +37,14 @@ program.command('build-cache')
     });
 
 program.command('import')
-    .description('Import a file modify the game files')
-    .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
-    .argument('<iff file name>', 'Name of the IFF file to modify')
-    .argument('<subfile name>', 'Name of the subfile to modify. If importing a SCNE texture, subfile name should include both '
-        + 'SCNE and texture name (without .DDS at the end), separated with a "/". Ex: arena/texture_0')
+    .description('Import a file to the mod overrides (does not alter the game files!)')
+    .argument('<path to mod directory>', 'Path to mod directory')
     .argument('<path to file>', 'Path to the file to import')
-    .option('-c, --cache', 'Force cache rebuild')
-    .action(async (pathToGameFiles, iffFileName, subfileName, pathToFile, options) => {
-        await importer(pathToGameFiles, iffFileName, subfileName, pathToFile, options);
+    .option('-iff, iff <iff file name>', 'Name of the IFF file to modify')
+    .option('-sub, sub <subfile name>', 'Name of the subfile to modify. If importing a SCNE texture, subfile name should include both '
+        + 'SCNE and texture name (without .DDS at the end), separated with a "/". Ex: arena/texture_0')
+    .action(async (pathToModDirectory, pathToFile, options) => {
+        await importer(pathToModDirectory, pathToFile, options);
     });
 
 program.command('revert')
@@ -60,6 +60,14 @@ program.command('revert-all')
     .argument('<path to game files>', 'Path to Choops game files directory (must include USRDIR in path)')
     .action(async (pathToGameFiles, options) => {
         await reverter.revertAll(pathToGameFiles, options);
+    });
+
+program.command('build')
+    .description('Build mods and alter the game files (do not do this while the game is active)')
+    .argument('<path to game files>', 'Path to the game files to modify')
+    .argument('<path to mod files>', 'Path to the mod')
+    .action(async (pathToGameFiles, pathToMod) => {
+        await builder(pathToGameFiles, pathToMod);
     });
 
 (async () => {
