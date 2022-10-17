@@ -39,6 +39,8 @@ module.exports = async (pathToGameFiles, pathToMod) => {
 
                 let iffCacheEntry = await controller.getEntryByName(content);
                 iffCacheEntry.controller = modIffController;
+
+                logFileReplacement(content, contentPath);
             }
         }
         else {
@@ -79,6 +81,7 @@ module.exports = async (pathToGameFiles, pathToMod) => {
                         if (packageFileName === subfileName) {
                             // TXTR
                             await textureWriter.toFileFromDDSPath(piecePath, subfileController);
+                            logFileReplacement(`${iff}/${subfileName}`, piecePath);
                         }
                         else {
                             // SCNE
@@ -86,6 +89,7 @@ module.exports = async (pathToGameFiles, pathToMod) => {
     
                             if (packageFile) {
                                 await textureWriter.toPackageFileFromDDSPath(piecePath, packageFile);
+                                logFileReplacement(`${iff}/${subfileName}/${packageFileName}`, piecePath);
                             }
                             else {
                                 console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}.`);
@@ -127,6 +131,8 @@ module.exports = async (pathToGameFiles, pathToMod) => {
                         Original: ${subfileController.dataBlocks.length}, New: ${wrappedFile.numberOfBlocks}. Skipping this file.`);
                     }
                     else {
+                        logFileReplacement(`${iff}/${subfileName}`, subContentPath);
+
                         wrappedFile.blocks.forEach((block, index) => {
                             subfileController.dataBlocks[index].data = block;
                             subfileController.dataBlocks[index].length = block.length;
@@ -138,4 +144,8 @@ module.exports = async (pathToGameFiles, pathToMod) => {
     }
 
     await controller.repack();
+};
+
+function logFileReplacement(file, replacementPath) {
+    console.log(`${file} : ${replacementPath}`);
 };
