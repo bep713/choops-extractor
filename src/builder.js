@@ -143,7 +143,7 @@ module.exports = async (pathToGameFiles, pathToMod) => {
         }
     }
 
-    await controller.repack();
+    await controller.repack(false);
 };
 
 function logFileReplacement(file, replacementPath) {
