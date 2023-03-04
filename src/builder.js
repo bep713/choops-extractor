@@ -68,11 +68,17 @@ module.exports = async (pathToGameFiles, pathToMod) => {
                     let iffController = await controller.getFileController(iff);
                     let subfileController = await iffController.getFileController(subfileName, type);
 
+                    if (!subfileController) {
+                        console.error(`Error: Cannot find a subfile named "${subfileName}" in ${iff}. Skipping this file.`);
+                        continue;
+                    }
+
                     for (let piece of piecesToReplace) {
                         const piecePath = path.join(subContentPath, piece);                        
                         
                         if (path.extname(piecePath) !== '.dds') {
-                            console.error('Error: currently, only DDS file imports are supported.');
+                            console.error('Error: currently, only DDS file imports are supported. Skipping this file.');
+                            continue;
                         }
                         
                         const textureWriter = new ChoopsTextureWriter();
@@ -92,7 +98,8 @@ module.exports = async (pathToGameFiles, pathToMod) => {
                                 logFileReplacement(`${iff}/${subfileName}/${packageFileName}`, piecePath);
                             }
                             else {
-                                console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}.`);
+                                console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}. Skipping this file.`);
+                                continue;
                             }
                         }
                     }

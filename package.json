@@ -1,6 +1,6 @@
 {
   "name": "choops-extractor",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A command line utility to extract textures and other files from College Hoops 2k8 (PS3)",
   "bin": "index.js",
   "main": "index.js",
