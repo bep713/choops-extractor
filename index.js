@@ -8,7 +8,7 @@ const builder = require('./src/builder');
 
 program
     .name('choops-extractor')
-    .version('0.5.1')
+    .version('0.5.2')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')

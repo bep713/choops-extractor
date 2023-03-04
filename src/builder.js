@@ -143,7 +143,9 @@ module.exports = async (pathToGameFiles, pathToMod) => {
         }
     }
 
+    console.log('Import Complete.\n\nRepacking files...This may take awhile.');
     await controller.repack(false);
+    console.log('Repacking Complete.');
 };
 
 function logFileReplacement(file, replacementPath) {
