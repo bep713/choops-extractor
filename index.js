@@ -8,7 +8,7 @@ const builder = require('./src/builder');
 
 program
     .name('choops-extractor')
-    .version('0.5.3')
+    .version('0.5.4')
     .description('A command line utility to extract College Hoops 2k8 (PS3) textures and more.')
 
 program.command('rip')
@@ -25,6 +25,7 @@ program.command('rip')
     .option('--type <types...>', 'Only output files of certain type(s). Accepts multiple inputs separated by a space. '
         + 'Supported types: UNKNOWN, TXTR, SCNE, AUDO, LAYT, MRKS, PRIV, TXT, DRCT, CLTH, AMBO, HILT, NAME, CDAN')
     .option('--raw-type', 'Output the subfile as it is in the IFF. Will not process the type (Ex: Textures will not output as DDS).')
+    .option('--game-name <gameName>', 'Specify which game you are ripping (valid values are: choops2k8, nba2k8, nba2k9)')
     .action(async (inputPath, outputPath, options) => {
         await ripper(inputPath, outputPath, options);
     });

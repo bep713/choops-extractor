@@ -22,6 +22,40 @@
         {
             "type": "pwa-node",
             "request": "launch",
+            "name": "(NBA 2K9) Rip all",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "rip",
+                "D:\\Media\\Games\\NBA 2K9\\PS3_GAME\\USRDIR",
+                "D:\\GameRips\\NBA 2K9 (PS3)",
+                "--show-console",
+                "--game-name", "nba2k9",
+                // "-c"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "(APF 2K8) Rip all",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "rip",
+                "D:\\Games\\APF 2k8\\All-Pro Football 2K8 (USA)\\PS3_GAME\\USRDIR",
+                "D:\\GameRips\\APF 2k8",
+                "--show-console",
+                "--game-name", "apf2k8",
+                // "-c"
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
             "name": "Rip one IFF",
             "skipFiles": [
                 "<node_internals>/**"
@@ -31,7 +65,7 @@
                 "rip",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
                 "D:\\GameRips\\CHoops2k8\\full-rip",
-                "-f", "ua036.iff",
+                "-f", "ua256.iff",
                 // "--iff-only",
                 // "--raw-iff",
                 // "--type", "SCNE",
@@ -89,6 +123,32 @@
         {
             "type": "pwa-node",
             "request": "launch",
+            "name": "Rebuild cache (Ch2k8)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "build-cache",
+                "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Rebuild cache (NBA2K9)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "args": [
+                "build-cache",
+                "D:\\Media\\Games\\NBA 2K9\\PS3_GAME\\USRDIR",
+            ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
             "name": "Build",
             "skipFiles": [
                 "<node_internals>/**"
@@ -97,7 +157,7 @@
             "args": [
                 "build",
                 "D:\\Games\\RPCS3\\rpcs3-v0.0.11-10661-182b20c3_win64\\dev_hdd0\\disc\\College Hoops 2K8 [U] [BLUS-30078]\\PS3_GAME\\USRDIR",
-                "C:\\Users\\Matt\\Downloads\\all_floors",
+                "D:\\GameRips\\CHoops2k8\\full-rip\\_overrides",
             ]
         },
     ]

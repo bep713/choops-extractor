@@ -42,7 +42,7 @@ module.exports = async (inputPath, outputPath, options) => {
     logger.info('*** Choops Extractor v0.5.0 output ***');
 
     await hashUtil.hashLookupPromise;
-    const controller = new ChoopsController(inputPath);
+    const controller = new ChoopsController(inputPath, options.gameName);
 
     const progressHandler = (data) => {
         logger.info(data.message);

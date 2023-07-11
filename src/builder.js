@@ -76,31 +76,56 @@ module.exports = async (pathToGameFiles, pathToMod) => {
                     for (let piece of piecesToReplace) {
                         const piecePath = path.join(subContentPath, piece);                        
                         
-                        if (path.extname(piecePath) !== '.dds') {
-                            console.error('Error: currently, only DDS file imports are supported. Skipping this file.');
-                            continue;
-                        }
-                        
-                        const textureWriter = new ChoopsTextureWriter();
-                        const packageFileName = path.basename(piece, '.dds');
+                        if (path.extname(piecePath) === '.gtf') {
+                            const textureWriter = new ChoopsTextureWriter();
+                            const packageFileName = path.basename(piece, '.gtf');
+                            const gtfData = await fs.readFile(piecePath);
 
-                        if (packageFileName === subfileName) {
-                            // TXTR
-                            await textureWriter.toFileFromDDSPath(piecePath, subfileController);
-                            logFileReplacement(`${iff}/${subfileName}`, piecePath);
-                        }
-                        else {
-                            // SCNE
-                            const packageFile = subfileController.getTextureByName(packageFileName);
-    
-                            if (packageFile) {
-                                await textureWriter.toPackageFileFromDDSPath(piecePath, packageFile);
-                                logFileReplacement(`${iff}/${subfileName}/${packageFileName}`, piecePath);
+                            if (packageFileName === subfileName) {
+                                // TXTR
+                                await textureWriter.toFileFromGtf(gtfData, subfileController);
+                                logFileReplacement(`${iff}/${subfileName}`, piecePath);
                             }
                             else {
-                                console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}. Skipping this file.`);
-                                continue;
+                                // SCNE
+                                const packageFile = subfileController.getTextureByName(packageFileName);
+        
+                                if (packageFile) {
+                                    await textureWriter.toPackageFileFromGtf(gtfData, packageFile);
+                                    logFileReplacement(`${iff}/${subfileName}/${packageFileName}`, piecePath);
+                                }
+                                else {
+                                    console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}. Skipping this file.`);
+                                    continue;
+                                }
                             }
+                        }
+                        else if (path.extname(piecePath) === '.dds') {
+                            const textureWriter = new ChoopsTextureWriter();
+                            const packageFileName = path.basename(piece, '.dds');
+
+                            if (packageFileName === subfileName) {
+                                // TXTR
+                                await textureWriter.toFileFromDDSPath(piecePath, subfileController);
+                                logFileReplacement(`${iff}/${subfileName}`, piecePath);
+                            }
+                            else {
+                                // SCNE
+                                const packageFile = subfileController.getTextureByName(packageFileName);
+        
+                                if (packageFile) {
+                                    await textureWriter.toPackageFileFromDDSPath(piecePath, packageFile);
+                                    logFileReplacement(`${iff}/${subfileName}/${packageFileName}`, piecePath);
+                                }
+                                else {
+                                    console.error(`Error: Cannot find a package file named "${packageFileName}" in ${subfileName}. Skipping this file.`);
+                                    continue;
+                                }
+                            }
+                        }
+                        else {
+                            console.error('Error: currently, only DDS or GTF file imports are supported. Skipping this file.');
+                            continue;
                         }
                     }
                 }
